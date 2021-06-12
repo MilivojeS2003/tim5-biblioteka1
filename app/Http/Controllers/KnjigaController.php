@@ -125,7 +125,7 @@ class KnjigaController extends Controller
             'Naslov'=>$request->nazivKnjiga,
             'izdavac_id'=>$request->izdavac,
             'pismo_id'=>$request->pismo,
-            'jezik_id'=>$request->izdavac,
+            'jezik_id'=>$request->jezik,
             'format_id'=>$request->format,
             'povez_id'=>$request->povez,
             'BrojStrana'=>$request->brStrana,

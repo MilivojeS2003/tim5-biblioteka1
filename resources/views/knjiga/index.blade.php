@@ -231,7 +231,7 @@
                                             {{$knjiga->RezervisanoPrimjeraka}}
                                             </a></td>
                                     <td class="px-4 py-4 text-sm leading-5 text-blue-800 whitespace-no-wrap"><a
-                                            href="{{route('knjiga.izdate',$knjiga)}}">
+                                            href="{{route('knjiga.iznajmljena',$knjiga)}}">
                                             {{$knjiga->IzdatoPrimjeraka}}
                                             </a></td>
                                     <td class="px-4 py-4 text-sm leading-5 text-blue-800 whitespace-no-wrap">

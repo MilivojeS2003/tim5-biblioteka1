@@ -10,6 +10,8 @@ class Jezik extends Model
     use HasFactory;
 
     public function knjiga(){
-        return $this->hasMany(Knjiga::class);
+        return $this->hasMany(Knjiga::class, 'jezik_id', 'id');
     }
+
+    public $table = 'jeziks';
 }

@@ -1,5 +1,56 @@
 @extends('layouts.layout')
 @section('content')
+    <style>
+        .image_area {
+            position: relative;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        .preview {
+            overflow: hidden;
+            width: 160px;
+            height: 160px;
+            margin: 10px;
+            border: 1px solid red;
+        }
+
+        .modal-lg{
+            max-width: 1000px !important;
+        }
+
+        .overlay {
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+            background-color: rgba(255, 255, 255, 0.5);
+            overflow: hidden;
+            height: 0;
+            transition: .5s ease;
+            width: 100%;
+        }
+
+        .image_area:hover .overlay {
+            height: 50%;
+            cursor: pointer;
+        }
+
+        .text {
+            color: #333;
+            font-size: 20px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+    </style>
      <!-- Content -->
      <section class="w-screen h-screen pl-[80px] pb-4 text-gray-700">
             <!-- Heading of content -->
@@ -36,7 +87,7 @@
             <!-- Space for content -->
             <div class="scroll height-content section-content">
                 <form action="{{route('bibliotekar.update',$bibliotekar->id)}}" method="post" class="text-gray-700 text-[14px] forma">
-                    @csrf 
+                    @csrf
                     @method('PUT')
                     <div class="flex flex-row ml-[30px]">
                         <div class="w-[50%] mb-[100px]">
@@ -45,7 +96,7 @@
                                 <input type="text" name="imePrezimeBibliotekarEdit" id="imePrezimeBibliotekarEdit" value="{{$bibliotekar->ImePrezime}}" class="flex w-[90%] mt-2 px-2 py-2 text-base bg-white border border-gray-300 shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-[#576cdf]" onkeydown="clearErrorsNameBibliotekarEdit()"/>
                                 <div class="fail" id="validateNameBibliotekarEdit">
                                 @error('imePrezimeBibliotekarEdit')@php echo "Ime i prezime bibliotekara je obavezno polje"; @endphp @enderror
-                             
+
                                 </div>
                             </div>
 
@@ -55,13 +106,13 @@
                                     <option></option>
                                     @foreach($tip as $t)
                                     <option @php if($t->Naziv==$bibliotekar->tipkorisnika->Naziv){echo 'selected';} @endphp value="{{$t->id}}">
-                                     {{$t->Naziv}}  
+                                     {{$t->Naziv}}
                                     </option>
                                    @endforeach
                                 </select>
                                 <div class="fail" id="validateNameBibliotekarEdit">
                                 @error('tip_korisnika')@php echo "Tip korisnika je obavezno polje"; @endphp @enderror
-                             
+
                                 </div>
                             </div>
 
@@ -70,7 +121,7 @@
                                 <input type="text" name="jmbgBibliotekarEdit" id="jmbgBibliotekarEdit" value="{{$bibliotekar->JMBG}}" class="flex w-[90%] mt-2 px-2 py-2 text-base bg-white border border-gray-300 shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-[#576cdf]" onkeydown="clearErrorsJmbgBibliotekarEdit()"/>
                                 <div class="fail" id="validateJmbgBibliotekarEdit">
                                 @error('jmbgBibliotekarEdit')@php echo "JMBG bibliotekara je obavezno polje"; @endphp @enderror
-                             
+
                                 </div>
                             </div>
 
@@ -79,7 +130,7 @@
                                 <input type="email" name="emailBibliotekarEdit" id="emailBibliotekarEdit" value="{{$bibliotekar->email}}" class="flex w-[90%] mt-2 px-2 py-2 text-base bg-white border border-gray-300 shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-[#576cdf]" onkeydown="clearErrorsEmailBibliotekarEdit()"/>
                                 <div class="fail" id="validateEmailBibliotekarEdit">
                                 @error('emailBibliotekarEdit')@php echo "Email bibliotekara je obavezno polje"; @endphp @enderror
-                             
+
                                 </div>
                             </div>
 
@@ -88,7 +139,7 @@
                                 <input type="text" name="usernameBibliotekarEdit" id="usernameBibliotekarEdit" value="{{$bibliotekar->KorisnickoIme}}" class="flex w-[90%] mt-2 px-2 py-2 text-base bg-white border border-gray-300 shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-[#576cdf]" onkeydown="clearErrorsUsernameBibliotekarEdit()"/>
                                 <div class="fail" id="validateUsernameBibliotekarEdit">
                                 @error('usernameBibliotekarEdit')@php echo "Korisnicko ime bibliotekara je obavezno polje"; @endphp @enderror
-                             
+
                                 </div>
                             </div>
 
@@ -97,17 +148,17 @@
                                 <input type="password" name="pwBibliotekarEdit" id="pwBibliotekarEdit" value="{{$bibliotekar->password}}" class="flex w-[90%] mt-2 px-2 py-2 text-base bg-white border border-gray-300 shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-[#576cdf]" onkeydown="clearErrorsPwBibliotekarEdit()"/>
                                 <div class="fail" id="validatePwBibliotekarEdit">
                                 @error('pwBibliotekarEdit')@php echo "Sifra bibliotekara je obavezno polje"; @endphp @enderror
-                             
+
                                 </div>
                             </div>
 
                             <div class="mt-[20px]">
                                 <span>Ponovi sifru <span class="text-red-500">*</span></span>
                                 <input type="password" name="pw2BibliotekarEdit" id="pw2BibliotekarEdit" value="{{$bibliotekar->password}}" class="flex w-[90%] mt-2 px-2 py-2 text-base bg-white border border-gray-300 shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-[#576cdf]" onkeydown="clearErrorsPw2BibliotekarEdit()"/>
-                               
+
                                 <div class="fail" id="validatePw2BibliotekarEdit">
                                 @error('pw2BibliotekarEdit')@php echo "Ponovljena sifra bibliotekara je obavezno polje i mora da se poklapa sa gornjom sifrom"; @endphp @enderror
-                             
+
                                 </div>
                             </div>
                         </div>
@@ -116,17 +167,16 @@
                             <label class="mt-6 cursor-pointer">
                                 <div id="empty-cover-art" class="relative w-48 h-48 py-[48px] text-center border-2 border-gray-300 border-solid">
                                     <div class="py-4">
-                                        <svg class="mx-auto feather feather-image mb-[15px]" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                                            <polyline points="21 15 16 10 5 21"></polyline>
-                                        </svg>
-                                        <span class="px-4 py-2 mt-2 leading-normal">Add photo</span>
-                                        <input type='file' class="hidden" :accept="accept" onchange="loadFileLibrarian(event)" />
+                                        <label for="upload_image">
+                                            <img src="/img/profileExample.jpg" id="uploaded_image" class="img-responsive img-circle" />
+                                            <div class="overlay">
+                                                <div class="text">Click to Change Profile Image</div>
+                                            </div>
+                                            <input type="file" name="image" class="image" id="upload_image" style="display:none" />
+                                        </label>
                                     </div>
-                                    <img src="img/profileExample.jpg" id="image-output-librarian" class="absolute w-48 h-[188px] bottom-0" />	
                                 </div>
-                            </label>  
+                            </label>
                         </div>
                     </div>
 
@@ -135,16 +185,16 @@
                             <div class="inline-block w-full text-right py-[7px] mr-[100px] text-white">
                                 <button type="reset"
                                         class="btn-animation shadow-lg mr-[15px] w-[150px] focus:outline-none text-sm py-2.5 px-5 transition duration-300 ease-in bg-[#F44336] hover:bg-[#F55549] rounded-[5px]">
-                                            Ponisti <i class="fas fa-times ml-[4px]"></i> 
+                                            Ponisti <i class="fas fa-times ml-[4px]"></i>
                                 </button>
                                 <button id="sacuvajBibliotekaraEdit" type="submit"
                                         class="btn-animation shadow-lg w-[150px] disabled:opacity-50 focus:outline-none text-sm py-2.5 px-5 transition duration-300 ease-in rounded-[5px] hover:bg-[#46A149] bg-[#4CAF50]" >
-                                            Sacuvaj <i class="fas fa-check ml-[4px]"></i> 
+                                            Sacuvaj <i class="fas fa-check ml-[4px]"></i>
                                 </button>
                             </div>
-                        </div>        
+                        </div>
                     </div>
-                    
+
                 </form>
             </div>
         </section>

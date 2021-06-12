@@ -480,6 +480,7 @@
                                 <option></option>
                                 @foreach($jezici as $jezik)
                                     <option
+
                                     @php if($knjiga->jezik->id==$jezik ->id){ echo 'selected';
                     } @endphp
                                      value="{{$jezik->id}}">
@@ -495,7 +496,7 @@
                             </div>
                             <div class="mt-[20px]">
                                 <p>International Standard Book Num <span class="text-red-500">*</span></p>
-                                <input type="text" name="isbnEdit" id="isbnEdit" value="{{$knjiga->ISBN}}" class="flex w-[45%] mt-2 px-2 py-2 text-base bg-white border border-gray-300 shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-[#576cdf]" onkeydown="clearErrorsIsbnEdit()"/>
+                                <input type="text" min="20" max="20" name="isbnEdit" id="isbnEdit" value="{{$knjiga->ISBN}}" class="flex w-[45%] mt-2 px-2 py-2 text-base bg-white border border-gray-300 shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-[#576cdf]" onkeydown="clearErrorsIsbnEdit()"/>
                                 <div class="fail" id="validateNazivKnjiga">
                                  @error('isbnEdit')@php echo "ISBN knjige je obavezno polje"; @endphp @enderror
                                  </div>

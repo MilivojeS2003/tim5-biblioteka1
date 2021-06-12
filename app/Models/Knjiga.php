@@ -45,7 +45,7 @@ class Knjiga extends Model
     }*/
     //kraj korisnickih metoda
     public function jezik(){
-        return $this->belongsTo(Jezik::class);
+        return $this->belongsTo(Jezik::class, 'jezik_id', 'id');
     }
 
     public function pismo(){
